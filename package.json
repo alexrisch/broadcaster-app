@@ -1,0 +1,19 @@
+{
+  "name": "broadcaster-app",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun run index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@xmtp/grpc-api-client": "^0.2.4",
+    "@xmtp/xmtp-js": "^11.5.0",
+    "ethers": "^6.11.1"
+  }
+}
