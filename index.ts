@@ -1,5 +1,5 @@
-import {Client} from "@xmtp/xmtp-js";
-import {Wallet} from 'ethers';
+import { Client } from "@xmtp/xmtp-js";
+import { Wallet } from "ethers";
 
 const XMTP_RATE_LIMIT = 1000;
 const XMTP_RATE_LIMIT_TIME = 60 * 1000; // 1 minute
@@ -7,14 +7,15 @@ const XMTP_RATE_LIMIT_TIME_INCREASE = XMTP_RATE_LIMIT_TIME * 5; // 5 minutes
 
 const BROADCAST_AMOUNT = 10000;
 
-const broadcastAddresses = new Array<string>(BROADCAST_AMOUNT).fill('');
-const delay = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms));
+const broadcastAddresses = new Array<string>(BROADCAST_AMOUNT).fill("");
+const delay = (ms: number) =>
+  new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 const run = async () => {
   const startTime = Date.now();
-  const wallet = Wallet.createRandom()
+  const wallet = Wallet.createRandom();
   // Create the client with your wallet. This will connect to the XMTP development network by default
-  console.log('Creating client');
+  console.log("Creating client");
   const client = await Client.create(wallet);
   const batches: string[][] = [];
   let batch: string[] = [];
@@ -40,30 +41,34 @@ const run = async () => {
   let currentRateLimitWaitTime = XMTP_RATE_LIMIT_TIME;
   for (let i = 0; i < batches.length; i++) {
     let batchWaitTime = currentRateLimitWaitTime;
-    const batchResponse = await Promise.allSettled(batches[i].map(async (address, index) => {
-      const conversation = await client.conversations.newConversation(address)
-      try {
-        await conversation.send('Hello from XMTP!');
-      } catch (err) {
-        errorCount++;
-        console.log(`Rate limited, waiting ${batchWaitTime}`);
-        await delay(batchWaitTime);
+    const batchResponse = await Promise.allSettled(
+      batches[i].map(async (address, index) => {
+        const conversation = await client.conversations.newConversation(
+          address
+        );
         try {
-          await conversation.send('Hello from XMTP!');
+          await conversation.send("Hello from XMTP!");
         } catch (err) {
           errorCount++;
-          currentRateLimitWaitTime = XMTP_RATE_LIMIT_TIME_INCREASE;
-          batchWaitTime = currentRateLimitWaitTime;
-          console.log(`Rate limited more, waiting ${batchWaitTime}`);
+          console.log(`Rate limited, waiting ${batchWaitTime}`);
           await delay(batchWaitTime);
-          await conversation.send('Hello from XMTP!');
+          try {
+            await conversation.send("Hello from XMTP!");
+          } catch (err) {
+            errorCount++;
+            currentRateLimitWaitTime = XMTP_RATE_LIMIT_TIME_INCREASE;
+            batchWaitTime = currentRateLimitWaitTime;
+            console.log(`Rate limited more, waiting ${batchWaitTime}`);
+            await delay(batchWaitTime);
+            await conversation.send("Hello from XMTP!");
+          }
         }
-      }
-      console.log(`Sent message for batch ${i} index ${index} to ${address}`);
-    }));
+        console.log(`Sent message for batch ${i} index ${index} to ${address}`);
+      })
+    );
     for (let j = 0; j < batchResponse.length; j++) {
       const element = batchResponse[j];
-      if (element.status === 'rejected') {
+      if (element.status === "rejected") {
         errorCount++;
         console.error(element.reason);
         // Add error handling here
@@ -71,7 +76,7 @@ const run = async () => {
     }
     if (i !== batches.length - 1) {
       // Wait between batches
-      console.log(`Waiting between batches ${i} and ${i + 1}`)
+      console.log(`Waiting between batches ${i} and ${i + 1}`);
       await delay(currentRateLimitWaitTime);
     }
   }
@@ -82,9 +87,9 @@ const run = async () => {
 
 const runBatches = async () => {
   const startTime = Date.now();
-  const wallet = Wallet.createRandom()
+  const wallet = Wallet.createRandom();
   // Create the client with your wallet. This will connect to the XMTP development network by default
-  console.log('Creating client');
+  console.log("Creating client");
   const client = await Client.create(wallet);
   const batches: string[][] = [];
   let batch: string[] = [];
@@ -109,24 +114,30 @@ const runBatches = async () => {
 
   for (let i = 0; i < batches.length; i++) {
     const batch: string[] = [];
-    await Promise.all(batches[i].map(async (address, index) => {
-      const conversation = await client.conversations.newConversation(address)
-      try {
-        await conversation.send('Hello from XMTP!');
-        console.log(`Sent message for batch ${i} index ${index} to ${address}`);
-      } catch (err) {
-        errorCount++;
-        console.error(err);
-        batch.push(address);
-        // Add error handling here
-      }
-    }));
+    await Promise.all(
+      batches[i].map(async (address, index) => {
+        const conversation = await client.conversations.newConversation(
+          address
+        );
+        try {
+          await conversation.send("Hello from XMTP!");
+          console.log(
+            `Sent message for batch ${i} index ${index} to ${address}`
+          );
+        } catch (err) {
+          errorCount++;
+          console.error(err);
+          batch.push(address);
+          // Add error handling here
+        }
+      })
+    );
     if (i !== batches.length - 1) {
       // Wait between batches
-      console.log(`Waiting between batches ${i} and ${i + 1}`)
+      console.log(`Waiting between batches ${i} and ${i + 1}`);
       await delay(XMTP_RATE_LIMIT_TIME_INCREASE);
     }
-    if(batch.length > 0) {
+    if (batch.length > 0) {
       batches.push(batch);
     }
   }
@@ -135,21 +146,22 @@ const runBatches = async () => {
   console.log(`Total time: ${endTime - startTime}ms with ${errorCount} errors`);
 };
 
-
 const runWait = async () => {
   const startTime = Date.now();
-  const wallet = Wallet.createRandom()
+  const wallet = Wallet.createRandom();
   // Create the client with your wallet. This will connect to the XMTP development network by default
-  console.log('Creating client');
+  console.log("Creating client");
   const client = await Client.create(wallet);
   const canMessageAddresses = await client.canMessage(broadcastAddresses);
   let errorCount = 0;
   let currentWait = 0;
   for (let i = 0; i < canMessageAddresses.length; i++) {
     if (canMessageAddresses[i]) {
-      const conversation = await client.conversations.newConversation(broadcastAddresses[i])
+      const conversation = await client.conversations.newConversation(
+        broadcastAddresses[i]
+      );
       try {
-        await conversation.send('Hello from XMTP!');
+        await conversation.send("Hello from XMTP!");
       } catch (err) {
         errorCount++;
         console.error(err);
@@ -160,13 +172,13 @@ const runWait = async () => {
         }
         await delay(currentWait);
         try {
-          await conversation.send('Hello from XMTP!');
+          await conversation.send("Hello from XMTP!");
         } catch (err) {
           errorCount++;
           console.error(err);
           await delay(XMTP_RATE_LIMIT_TIME_INCREASE);
           try {
-            await conversation.send('Hello from XMTP!');
+            await conversation.send("Hello from XMTP!");
           } catch (err) {
             errorCount++;
             console.error(err);
@@ -180,7 +192,11 @@ const runWait = async () => {
   const endTime = Date.now();
   // Total time awaiting each send: 3421425ms with 8 errors ~57 minutes
   // Total time awaiting each send: 8232861ms with 24702 errors
-  console.log(`Total time awaiting each send: ${endTime - startTime}ms with ${errorCount} errors`);
+  console.log(
+    `Total time awaiting each send: ${
+      endTime - startTime
+    }ms with ${errorCount} errors`
+  );
 };
 
 runBatches();
