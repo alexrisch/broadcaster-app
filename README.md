@@ -5,11 +5,11 @@
 Broadcasting with XMTP allows you to send a single message to multiple recipients, treating each message as a direct message (DM) from the sender's wallet address to each recipient's wallet address. High volume broadcasts require careful planning to adhere to XMTP's rate limits and ensure efficient and responsible use of the network.
 
 - **Network Activation**: Before sending a broadcast message, verify that each recipient's wallet is activated on the XMTP network with `canMessage`. Only activated wallets can receive and view messages.
-- **Rate Limiting**: XMTP imposes rate limits to maintain network health and prevent spam. Familiarize yourself with these limits and design your message sending strategy to comply with them. [FAQ](https://docs.xmtp.org/docs/faq#rate-limiting).
-- **User Consent**: In accordance with data privacy laws, obtain explicit consent from users before sending them broadcast messages. [Read more](https://docs.xmtp.org/docs/build/user-consent).
+- **Rate Limiting**: XMTP imposes rate limits to maintain network health and prevent spam. Familiarize yourself with these limits and design your message sending strategy to comply with them. [FAQ](https://xmtp.org/docs/faq#rate-limiting).
+- **User Consent**: In accordance with data privacy laws, obtain explicit consent from users before sending them broadcast messages. [Read more](https://xmtp.org/docs/build/user-consent).
 
 > ⚠️
-> Without explicit consent from the recipients, broadcast messages are more likely to be flagged as spam, significantly reducing their deliverability. [Read more](https://docs.xmtp.org/docs/build/user-consent).
+> Without explicit consent from the recipients, broadcast messages are more likely to be flagged as spam, significantly reducing their deliverability. [Read more](https://xmtp.org/docs/build/user-consent).
 
 ### Code example
 
