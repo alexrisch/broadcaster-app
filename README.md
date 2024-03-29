@@ -1,5 +1,7 @@
 # Broadcast with XMTP
 
+![xmtp](https://github.com/xmtp/xmtp-quickstart-reactjs/assets/1447073/3f2979ec-4d13-4c3d-bf20-deab3b2ffaa1)
+
 Broadcasting with XMTP allows you to send a single message to multiple recipients, treating each message as a direct message (DM) from the sender's wallet address to each recipient's wallet address. High volume broadcasts require careful planning to adhere to XMTP's rate limits and ensure efficient and responsible use of the network.
 
 - **Rate Limits**: Understand and respect XMTP's rate limits to prevent network overload and ensure your messages are delivered smoothly.
