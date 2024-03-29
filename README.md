@@ -15,9 +15,9 @@ Below are the key variables and functions we use to ensure our broadcasting code
 
 #### Parameters
 
-- **XMTP_RATE_LIMIT**: Caps the number of messages at 1000 per minute to avoid network strain and spam detection.
-- **XMTP_RATE_LIMIT_TIME**: Sets the wait time between message batches to 60,000 milliseconds (1 minute), matching the rate limit to prevent exceeding the message cap.
-- **XMTP_RATE_LIMIT_TIME_INCREASE**: Extends the wait time to 5 minutes after hitting a rate limit error, minimizing the risk of further rate limit breaches.
+- `XMTP_RATE_LIMIT`: Caps the number of messages at 1000 per minute to avoid network strain and spam detection.
+- `XMTP_RATE_LIMIT_TIME`: Sets the wait time between message batches to 60,000 milliseconds (1 minute), matching the rate limit to prevent exceeding the message cap.
+- `XMTP_RATE_LIMIT_TIME_INCREASE`: Extends the wait time to 5 minutes after hitting a rate limit error, minimizing the risk of further rate limit breaches.
 
 #### Strategies
 
