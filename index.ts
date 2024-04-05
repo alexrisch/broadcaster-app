@@ -1,4 +1,5 @@
 import { Client } from "@xmtp/xmtp-js";
+import { GrpcApiClient } from "@xmtp/grpc-api-client";
 import { Wallet } from "ethers";
 
 const XMTP_RATE_LIMIT = 1000;
@@ -16,7 +17,9 @@ const run = async () => {
   const wallet = Wallet.createRandom();
   // Create the client with your wallet. This will connect to the XMTP development network by default
   console.log("Creating client");
-  const client = await Client.create(wallet);
+  const client = await Client.create(wallet, {
+    apiClientFactory: GrpcApiClient.fromOptions,
+  });
   const batches: string[][] = [];
   let batch: string[] = [];
   const canMessageAddresses = await client.canMessage(broadcastAddresses);
@@ -90,7 +93,10 @@ const runBatches = async () => {
   const wallet = Wallet.createRandom();
   // Create the client with your wallet. This will connect to the XMTP development network by default
   console.log("Creating client");
-  const client = await Client.create(wallet);
+  const client = await Client.create(wallet, {
+    apiClientFactory: GrpcApiClient.fromOptions,
+  });
+
   const batches: string[][] = [];
   let batch: string[] = [];
   const canMessageAddresses = await client.canMessage(broadcastAddresses);
@@ -151,7 +157,9 @@ const runWait = async () => {
   const wallet = Wallet.createRandom();
   // Create the client with your wallet. This will connect to the XMTP development network by default
   console.log("Creating client");
-  const client = await Client.create(wallet);
+  const client = await Client.create(wallet, {
+    apiClientFactory: GrpcApiClient.fromOptions,
+  });
   const canMessageAddresses = await client.canMessage(broadcastAddresses);
   let errorCount = 0;
   let currentWait = 0;

@@ -29,16 +29,16 @@ Below are the key variables and functions we use to ensure our broadcasting code
 
 ### Local testing
 
-To install dependencies:
+To install dependencies use Yarn v4 and:
 
 ```bash
-bun install
+yarn install
 ```
 
 To run:
 
 ```bash
-bun run index.ts
+yarn start
 ```
 
 ### Documentation
