@@ -29,7 +29,12 @@ Below are the key variables and functions we use to ensure our broadcasting code
 
 ### Local testing
 
-To install dependencies use Yarn v4 and:
+Requirements:
+
+- Yarn v4
+- Node >18
+
+To install dependencies:
 
 ```bash
 yarn install
