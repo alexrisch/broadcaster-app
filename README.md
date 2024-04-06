@@ -25,15 +25,16 @@ Below are the key variables and functions we use to ensure our broadcasting code
 
 1. **run**: Sends messages in batches, adhering to the rate limit. It dynamically adjusts the wait time between batches upon encountering rate limit errors.
 2. **runBatches**: Splits the allowed rate limit in half for a more conservative approach and includes a retry mechanism for failed messages. This function exemplifies both batch processing and robust error handling.
+
 3. **runWait**: Adjusts wait times on a per-message basis, starting with no wait time and increasing upon encountering errors. This method offers a granular approach to error handling and rate limit management.
 
-> Our broadcasting implementation uses gRPC to improve performance. Please refer to the [documentation](https://github.com/xmtp/xmtp-node-js-tools/tree/main/packages/grpc-api-client)
+> This implementation uses the gRPC API client to improve performance. To learn more, refer to the [gRPC API client documentation](https://github.com/xmtp/xmtp-node-js-tools/tree/main/packages/grpc-api-client).
 
 ### Local testing
 
 Requirements:
 
-- Yarn v4
+- Yarn v4 (grpc api client works only with Yarn)
 - Node >18
 
 To install dependencies:
