@@ -13,7 +13,7 @@ Broadcasting with XMTP allows you to send a single message to multiple recipient
 
 ### Code example
 
-Below are the key variables and functions we use to ensure our broadcasting code complies with XMTP's guidelines for responsible and efficient message distribution.
+Below are the key variables and functions we use to ensure the broadcasting code complies with XMTP's guidelines for responsible and efficient message distribution.
 
 #### Parameters
 
@@ -51,4 +51,4 @@ yarn start
 
 ### Documentation
 
-For more detailed information on broadcasting with XMTP, including code examples, best practices, and troubleshooting tips, please refer to our [official documentation](https://xmtp.org/docs/tutorials/broadcast).
+For more detailed information on broadcasting with XMTP, including code examples, best practices, and troubleshooting tips, please refer to the [official documentation](https://xmtp.org/docs/tutorials/broadcast).
