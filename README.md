@@ -30,6 +30,14 @@ Below are the key variables and functions we use to ensure the broadcasting code
 
 > This implementation uses the gRPC API client to improve performance. To learn more, refer to the [gRPC API client documentation](https://github.com/xmtp/xmtp-node-js-tools/tree/main/packages/grpc-api-client).
 
+#### Implementing caching with fs-persistence
+
+To enhance the efficiency of handling conversations in XMTP, implementing a caching mechanism is crucial. By using `fs-persistence` (or Redis), the system can quickly verify the existence of a conversation without the need to reload and check all conversations. This approach significantly speeds up both the initial and subsequent requests, reducing wait times and avoiding timeouts.
+
+For more details on setting up `fs-persistence` with XMTP, refer to the [fs-persistence documentation](https://github.com/xmtp/xmtp-node-js-tools/tree/main/packages/fs-persistence).
+
+The necessity for this caching mechanism arises from the need to determine whether `newConversation` is continuing an existing conversation or initiating a new one. This check helps prevent duplicate conversations with the same user, adhering to privacy restrictions.
+
 ### Local testing
 
 Requirements:
